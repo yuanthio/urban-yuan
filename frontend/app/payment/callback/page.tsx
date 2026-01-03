@@ -18,8 +18,6 @@ import {
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
-export const dynamic = 'force-dynamic';
-
 export default function PaymentCallbackPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
