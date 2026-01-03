@@ -243,30 +243,8 @@ export default function SupplierNavbar() {
                 <span>Orders</span>
               </Link>
 
-              {/* Mobile menu items */}
+              {/* Additional mobile menu items */}
               <div className="border-t border-red-800/30 pt-2 mt-2">
-                <button
-                  onClick={() => {
-                    router.push("/supplier/dashboard");
-                    setMobileMenuOpen(false);
-                  }}
-                  className={mobileLinkClass("/supplier/dashboard")}
-                >
-                  <BarChart3 className="w-5 h-5" />
-                  <span>Dashboard</span>
-                </button>
-
-                <button
-                  onClick={() => {
-                    router.push("/supplier/product");
-                    setMobileMenuOpen(false);
-                  }}
-                  className={mobileLinkClass("/supplier/product")}
-                >
-                  <Package className="w-5 h-5" />
-                  <span>Products</span>
-                </button>
-
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
