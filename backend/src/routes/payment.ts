@@ -23,6 +23,22 @@ router.get("/notification-test", (req, res) => {
   res.json({ message: 'Notification endpoint is working' });
 });
 
+// Public route for payment callback (GET for frontend redirect)
+router.get("/callback", (req, res) => {
+  console.log('Payment callback received:', req.query);
+  
+  // Redirect ke frontend dengan query parameters
+  const { order_id, status_code, transaction_status } = req.query;
+  
+  if (order_id && status_code && transaction_status) {
+    // Redirect ke frontend payment callback page
+    res.redirect(`https://urban-yuan.vercel.app/payment/callback?order_id=${order_id}&status_code=${status_code}&transaction_status=${transaction_status}`);
+  } else {
+    // Jika tidak ada parameter, redirect ke frontend
+    res.redirect('https://urban-yuan.vercel.app/payment/callback');
+  }
+});
+
 // Protected routes (require authentication)
 router.use(authenticate);
 
