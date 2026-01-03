@@ -64,9 +64,9 @@ export async function createPaymentToken(req: Request, res: Response) {
         email: order.user.email,
       },
       callbacks: {
-        finish: `${process.env.FRONTEND_URL}/payment/callback`,
-        error: `${process.env.FRONTEND_URL}/payment/callback`,
-        pending: `${process.env.FRONTEND_URL}/payment/callback`,
+        finish: `${process.env.BACKEND_URL}/payment/callback`,
+        error: `${process.env.BACKEND_URL}/payment/callback`,
+        pending: `${process.env.BACKEND_URL}/payment/callback`,
       },
       // HAPUS expiry untuk sementara
       // expiry: {
