@@ -57,7 +57,7 @@ export default function ProductDetail() {
         }
 
         const res = await fetch(
-          `http://localhost:4000/public/products/detail/${params.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/public/products/detail/${params.id}`
         );
 
         if (!res.ok) {

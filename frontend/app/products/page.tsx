@@ -58,7 +58,7 @@ export default function ProductsPage() {
   const loadProducts = async (page: number = 1) => {
     try {
       setLoading(true);
-      const res = await fetch(`http://localhost:4000/public/products?page=${page}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/products?page=${page}`);
       
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -79,7 +79,7 @@ export default function ProductsPage() {
       console.error("Failed to load products:", err);
       // Fallback: try direct route
       try {
-        const fallbackRes = await fetch("http://localhost:4000/public/products");
+        const fallbackRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/products`);
         if (fallbackRes.ok) {
           const fallbackData = await fallbackRes.json();
           if (Array.isArray(fallbackData)) {

@@ -127,7 +127,7 @@ export default function SharedNavbar() {
     setIsSearching(true);
     try {
       console.log('Searching for:', query);
-      const res = await fetch(`http://localhost:4000/public/products`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/products`);
       
       console.log('Response status:', res.status);
       

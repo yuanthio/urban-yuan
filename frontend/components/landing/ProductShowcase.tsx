@@ -28,7 +28,7 @@ export default function ProductShowcase() {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const res = await fetch("http://localhost:4000/public/products?limit=8");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/public/products?limit=8`);
         
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
