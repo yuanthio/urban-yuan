@@ -134,6 +134,15 @@ app.get("/public/products/detail/:id", async (req, res) => {
   }
 });
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.status(200).json({ 
+    status: "OK", 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
 // Test endpoint
 app.get("/test", (req, res) => {
   res.json({ message: "Server is working!", timestamp: new Date().toISOString() });
