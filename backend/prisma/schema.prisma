@@ -1,0 +1,116 @@
+// e-commerce/backend/prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Profile {
+  id        String   @id @db.Uuid
+  email     String
+  role      String   @default("user")
+  fullName  String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+
+  products      Product[]
+  cart          Cart?
+  orders        Order[]
+  supplierOrders Order[]      @relation("supplierOrders")
+  supplierOrderItems OrderItem[] @relation("supplierOrderItems")
+}
+
+model Product {
+  id          String   @id @default(uuid()) @db.Uuid
+  supplierId  String   @db.Uuid
+  name        String
+  description String?
+  price       Int
+  stock       Int
+  size        String   @default("[]") // Menyimpan array size dalam format JSON
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  supplier   Profile    @relation(fields: [supplierId], references: [id])
+  images     ProductImage[] // Multiple images
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+}
+
+// Model untuk multiple images
+model ProductImage {
+  id        String   @id @default(uuid()) @db.Uuid
+  productId String   @db.Uuid
+  url       String
+  order     Int      @default(0) // Untuk mengurutkan gambar
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, order])
+}
+
+model Cart {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @unique @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  Profile   @relation(fields: [userId], references: [id])
+  items CartItem[]
+}
+
+model CartItem {
+  id        String   @id @default(uuid()) @db.Uuid
+  cartId    String   @db.Uuid
+  productId String   @db.Uuid
+  quantity  Int
+  size      String?   // TAMBAH FIELD SIZE
+
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([cartId, productId, size])
+}
+
+model Order {
+  id         String      @id @default(uuid()) @db.Uuid
+  userId     String      @db.Uuid
+  supplierId String      @db.Uuid
+  status     OrderStatus @default(PENDING)
+  totalPrice Int
+  createdAt  DateTime    @default(now())
+
+  user     Profile     @relation(fields: [userId], references: [id])
+  supplier Profile     @relation(fields: [supplierId], references: [id], name: "supplierOrders")
+  items    OrderItem[]
+}
+
+model OrderItem {
+  id          String   @id @default(uuid()) @db.Uuid
+  orderId     String   @db.Uuid
+  productId   String   @db.Uuid
+  supplierId  String   @db.Uuid
+  size        String?  // TAMBAH FIELD SIZE
+
+  productName String
+  price       Int
+  quantity    Int
+  imageUrl    String?
+
+  order    Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product  Product @relation(fields: [productId], references: [id])
+  supplier Profile @relation(fields: [supplierId], references: [id], name: "supplierOrderItems")
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  COMPLETED
+  CANCELLED
+}
