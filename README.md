@@ -61,17 +61,19 @@
 
     ```text
     urban-yuan/
-    ├── apps/
-    │   ├── web/                # Next.js frontend
-    │   └── api/                # Express.js backend
-    ├── prisma/                 # Prisma schema & migrations
-    ├── src/
-    │   ├── components/         # Reusable UI components
-    │   ├── features/           # Feature-based modules
-    │   ├── lib/                # Utilities & helpers
-    │   ├── services/           # API & business logic
-    │   └── types/              # TypeScript type definitions
-    └── README.md
+    ├── .vscode/                    # VSCode settings & workspace configs
+    ├── backend/                    # Express.js backend API
+    │   ├── src/                    # Backend source code
+    │   ├── prisma/                 # Prisma schema & migrations
+    │   └── package.json            # Backend dependencies & scripts
+    ├── frontend/                   # Next.js frontend application
+    │   ├── app/                    # Next.js App Router
+    │   ├── components/             # Reusable UI components
+    │   ├── lib/                    # Utilities & helpers
+    │   ├── styles/                 # Global & utility styles
+    │   ├── public/                 # Static assets
+    │   └── package.json            # Frontend dependencies & scripts
+    └── README.md                   # Project overview & documentation
 
 ## Getting Started
 1. Clone Repository
