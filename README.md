@@ -75,7 +75,7 @@
     │   └── package.json            # Frontend dependencies & scripts
     └── README.md                   # Project overview & documentation
 
-## Getting Started
+## 🚀 Getting Started
 1. Clone Repository
    ```bash
    git clone https://github.com/yuanthio/urban-yuan.git
